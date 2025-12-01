@@ -1,61 +1,64 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Check } from "lucide-react"
+import { Github, Linkedin, Globe, Mail } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
-interface Plan {
+interface TeamMember {
   name: string
-  price: string
+  role: string
   description: string
-  features: string[]
+  skills: string[]
+  portfolio?: string
+  linkedin?: string
+  github?: string
+  email?: string
   highlighted?: boolean
 }
 
-const plans: Plan[] = [
+const teamMembers: TeamMember[] = [
   {
-    name: "Starter",
-    price: "$2,999",
-    description: "Perfect for small projects and startups",
-    features: [
-      "Up to 5 pages",
-      "Responsive design",
-      "Basic SEO optimization",
-      "Contact form",
-      "2 weeks delivery",
-      "Email support",
+    name: "Oussama Errafif",
+    role: "Full Stack Developer",
+    description: "Passionate about creating elegant web solutions",
+    skills: [
+      "React & Next.js",
+      "TypeScript",
+      "Node.js",
+      "UI/UX Design",
+      "Database Design",
+      "API Development",
     ],
-  },
-  {
-    name: "Professional",
-    price: "$7,999",
-    description: "Ideal for growing businesses",
-    features: [
-      "Up to 15 pages",
-      "Advanced SEO",
-      "E-commerce integration",
-      "Analytics setup",
-      "CMS integration",
-      "4 weeks delivery",
-      "Priority support",
-      "Monthly maintenance",
-    ],
+    portfolio: "https://portfolio1-mu-sepia.vercel.app/",
     highlighted: true,
   },
   {
-    name: "Enterprise",
-    price: "Custom",
-    description: "For complex, large-scale projects",
-    features: [
-      "Unlimited pages",
-      "Custom development",
-      "API integrations",
-      "Advanced security",
-      "Performance optimization",
-      "Custom timeline",
-      "24/7 support",
-      "Ongoing optimization",
+    name: "Youssef Sina",
+    role: "Creative Developer",
+    description: "Crafting innovative digital experiences",
+    skills: [
+      "Frontend Development",
+      "JavaScript/TypeScript",
+      "Modern Frameworks",
+      "Responsive Design",
+      "Performance Optimization",
+      "Web Animation",
     ],
+    portfolio: "https://www.youssefsina.me/",
+  },
+  {
+    name: "Oussama Sina",
+    role: "Software Engineer",
+    description: "Building scalable and robust applications",
+    skills: [
+      "Software Architecture",
+      "Backend Development",
+      "Problem Solving",
+      "System Design",
+      "Code Quality",
+      "Team Collaboration",
+    ],
+    linkedin: "https://www.linkedin.com/in/oussama-sina/",
   },
 ]
 
@@ -89,46 +92,90 @@ export default function PricingPlans({ isActive }: { isActive: boolean }) {
         animate={isActive ? "visible" : "hidden"}
       >
         <motion.div className="mb-12" variants={itemVariants}>
-          <span className="text-sm font-semibold text-[#FF4D00] uppercase tracking-wider">Pricing</span>
+          <span className="text-sm font-semibold text-[#FF4D00] uppercase tracking-wider">Our Team</span>
         </motion.div>
 
         <motion.h2 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-16" variants={itemVariants}>
-          Simple, Transparent Plans
+          Meet the Team
         </motion.h2>
 
         <motion.div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8" variants={containerVariants}>
-          {plans.map((plan) => (
+          {teamMembers.map((member) => (
             <motion.div
-              key={plan.name}
+              key={member.name}
               className={`rounded-lg p-8 border transition-all ${
-                plan.highlighted ? "border-[#FF4D00] bg-[#FF4D00]/10" : "border-neutral-700 bg-neutral-900/50"
+                member.highlighted ? "border-[#FF4D00] bg-[#FF4D00]/10" : "border-neutral-700 bg-neutral-900/50"
               }`}
               variants={itemVariants}
               whileHover={{ y: -5 }}
             >
-              <h3 className="text-2xl font-bold mb-2">{plan.name}</h3>
-              <p className="text-neutral-400 text-sm mb-6">{plan.description}</p>
-              <div className="mb-8">
-                <span className="text-4xl font-bold">{plan.price}</span>
-                {plan.price !== "Custom" && <span className="text-neutral-400 ml-2">one-time</span>}
+              <div className="mb-6">
+                <div className="w-20 h-20 rounded-full bg-gradient-to-br from-[#FF4D00] to-orange-600 flex items-center justify-center mb-4">
+                  <span className="text-3xl font-bold text-white">
+                    {member.name.split(' ').map(n => n[0]).join('')}
+                  </span>
+                </div>
+                <h3 className="text-2xl font-bold mb-2">{member.name}</h3>
+                <p className="text-[#FF4D00] font-semibold text-sm mb-3">{member.role}</p>
+                <p className="text-neutral-400 text-sm mb-6">{member.description}</p>
               </div>
-              <Button
-                className={`w-full mb-8 ${
-                  plan.highlighted
-                    ? "bg-[#FF4D00] text-black hover:bg-[#FF4D00]/90"
-                    : "bg-transparent border border-[#FF4D00] text-[#FF4D00] hover:bg-[#FF4D00] hover:text-black"
-                }`}
-              >
-                Get Started
-              </Button>
-              <ul className="space-y-4">
-                {plan.features.map((feature) => (
-                  <li key={feature} className="flex items-center gap-3">
-                    <Check className="w-5 h-5 text-[#FF4D00] flex-shrink-0" />
-                    <span className="text-sm text-neutral-300">{feature}</span>
-                  </li>
-                ))}
-              </ul>
+
+              <div className="flex gap-3 mb-8">
+                {member.portfolio && (
+                  <a
+                    href={member.portfolio}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-2 rounded-lg bg-neutral-800 hover:bg-[#FF4D00] transition-colors"
+                    aria-label="Portfolio"
+                  >
+                    <Globe className="w-5 h-5" />
+                  </a>
+                )}
+                {member.linkedin && (
+                  <a
+                    href={member.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-2 rounded-lg bg-neutral-800 hover:bg-[#FF4D00] transition-colors"
+                    aria-label="LinkedIn"
+                  >
+                    <Linkedin className="w-5 h-5" />
+                  </a>
+                )}
+                {member.github && (
+                  <a
+                    href={member.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-2 rounded-lg bg-neutral-800 hover:bg-[#FF4D00] transition-colors"
+                    aria-label="GitHub"
+                  >
+                    <Github className="w-5 h-5" />
+                  </a>
+                )}
+                {member.email && (
+                  <a
+                    href={`mailto:${member.email}`}
+                    className="p-2 rounded-lg bg-neutral-800 hover:bg-[#FF4D00] transition-colors"
+                    aria-label="Email"
+                  >
+                    <Mail className="w-5 h-5" />
+                  </a>
+                )}
+              </div>
+
+              <div className="space-y-3">
+                <p className="text-xs font-semibold text-neutral-400 uppercase tracking-wider">Skills</p>
+                <ul className="space-y-2">
+                  {member.skills.map((skill) => (
+                    <li key={skill} className="flex items-center gap-2">
+                      <div className="w-1.5 h-1.5 rounded-full bg-[#FF4D00]" />
+                      <span className="text-sm text-neutral-300">{skill}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </motion.div>
           ))}
         </motion.div>

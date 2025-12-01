@@ -7,45 +7,45 @@ interface WorkItem {
   id: string
   title: string
   category: string
-  image: string
+  url: string
+  description: string
 }
 
 const workItems: WorkItem[] = [
   {
     id: "1",
-    title: "E-Commerce Platform",
-    category: "Web Development",
-    image: "/modern-ecommerce-interface.png",
+    title: "Hate2Love",
+    category: "Blog Website",
+    url: "https://hate2love.vercel.app/",
+    description: "A modern blog platform with elegant design and smooth user experience",
   },
   {
     id: "2",
-    title: "Brand Identity",
-    category: "Branding",
-    image: "/modern-brand-identity.png",
+    title: "OmnivionAI",
+    category: "AI Application",
+    url: "https://omnivionai-landing-page.vercel.app/",
+    description: "Cutting-edge AI application landing page with interactive features",
   },
   {
     id: "3",
-    title: "Mobile App Design",
-    category: "UI/UX Design",
-    image: "/mobile-app-ui.png",
+    title: "SipStop",
+    category: "Coffee Shop",
+    url: "https://sipstop.vercel.app/",
+    description: "Cozy coffee shop website with menu and ordering capabilities",
   },
   {
     id: "4",
-    title: "SaaS Dashboard",
-    category: "Web Development",
-    image: "/saas-dashboard-analytics-interface.jpg",
+    title: "Dentist Landing Page",
+    category: "Healthcare Website",
+    url: "https://dentistlandingpage.vercel.app/",
+    description: "Professional dental practice website with appointment booking",
   },
   {
     id: "5",
-    title: "Marketing Website",
-    category: "Web Design",
-    image: "/modern-marketing-website-design.jpg",
-  },
-  {
-    id: "6",
-    title: "Visual System",
-    category: "Design System",
-    image: "/design-system-components.png",
+    title: "Apex Resume",
+    category: "Resume Builder",
+    url: "https://www.apexresume.tech/",
+    description: "Professional resume building platform with modern templates",
   },
 ]
 
@@ -93,32 +93,53 @@ export default function WorkGallery({ isActive }: { isActive: boolean }) {
           variants={containerVariants}
         >
           {workItems.map((item) => (
-            <motion.div
+            <motion.a
               key={item.id}
-              className="relative overflow-hidden rounded-lg cursor-pointer group"
+              href={item.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="relative overflow-hidden rounded-lg cursor-pointer group block"
               onMouseEnter={() => setHoveredId(item.id)}
               onMouseLeave={() => setHoveredId(null)}
               variants={itemVariants}
             >
-              <div className="relative h-64 md:h-72 overflow-hidden bg-neutral-900">
-                <motion.img
-                  src={item.image}
-                  alt={item.title}
-                  className="w-full h-full object-cover"
-                  animate={hoveredId === item.id ? { scale: 1.1 } : { scale: 1 }}
+              <div className="relative h-64 md:h-72 overflow-hidden bg-gradient-to-br from-neutral-900 to-neutral-800 flex flex-col justify-end p-6">
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-br from-[#FF4D00]/20 to-orange-500/10"
+                  animate={hoveredId === item.id ? { opacity: 1 } : { opacity: 0.3 }}
                   transition={{ duration: 0.3 }}
                 />
-                <motion.div
-                  className="absolute inset-0 bg-black/60 flex flex-col justify-end p-6"
-                  initial={{ opacity: 0 }}
-                  animate={hoveredId === item.id ? { opacity: 1 } : { opacity: 0 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <h3 className="text-xl font-bold text-white mb-2">{item.title}</h3>
-                  <p className="text-sm text-neutral-300">{item.category}</p>
-                </motion.div>
+                <div className="relative z-10">
+                  <motion.h3 
+                    className="text-xl font-bold text-white mb-2"
+                    animate={hoveredId === item.id ? { y: -5 } : { y: 0 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    {item.title}
+                  </motion.h3>
+                  <p className="text-sm text-[#FF4D00] font-semibold mb-2">{item.category}</p>
+                  <motion.p 
+                    className="text-sm text-neutral-300"
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={hoveredId === item.id ? { opacity: 1, height: "auto" } : { opacity: 0, height: 0 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    {item.description}
+                  </motion.p>
+                  <motion.div
+                    className="mt-3 flex items-center gap-2 text-white text-sm"
+                    initial={{ opacity: 0 }}
+                    animate={hoveredId === item.id ? { opacity: 1 } : { opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <span>View Project</span>
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  </motion.div>
+                </div>
               </div>
-            </motion.div>
+            </motion.a>
           ))}
         </motion.div>
       </motion.div>
