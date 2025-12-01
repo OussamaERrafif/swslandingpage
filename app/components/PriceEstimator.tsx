@@ -56,23 +56,23 @@ export default function PriceEstimator({ isActive, onContactUs }: { isActive: bo
   }
 
   return (
-    <section className="relative min-h-screen w-full snap-start py-16 md:py-20 lg:py-24">
-      <div className="max-w-6xl mx-auto w-full px-6 md:px-12 lg:px-20">
+    <section className="relative min-h-screen w-full snap-start py-12 sm:py-16 md:py-20 lg:py-24">
+      <div className="max-w-6xl mx-auto w-full px-4 sm:px-6 md:px-12 lg:px-20">
         <motion.div
-          className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center"
+          className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 items-center"
           variants={containerVariants}
           initial="hidden"
           animate={isActive ? "visible" : "hidden"}
         >
           {/* Left side - Title and description */}
-          <motion.div variants={itemVariants} className="space-y-6">
+          <motion.div variants={itemVariants} className="space-y-4 sm:space-y-6">
             <div>
               <span className="text-sm font-semibold text-[#FF4D00] uppercase tracking-wider">Estimator</span>
             </div>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight">
               Get Your Price Estimate
             </h2>
-            <p className="text-lg text-neutral-400 leading-relaxed">
+            <p className="text-base sm:text-lg text-neutral-400 leading-relaxed">
               Use our interactive calculator to get a rough estimate for your web project. Adjust the parameters below to see how the price changes.
             </p>
           </motion.div>
@@ -82,10 +82,10 @@ export default function PriceEstimator({ isActive, onContactUs }: { isActive: bo
             className="w-full"
             variants={itemVariants}
           >
-            <div className="bg-neutral-900/50 border border-neutral-700 rounded-xl p-6 md:p-8 shadow-2xl backdrop-blur-sm">
-              <div className="space-y-6">
+            <div className="bg-neutral-900/50 border border-neutral-700 rounded-xl p-4 sm:p-6 md:p-8 shadow-2xl backdrop-blur-sm">
+              <div className="space-y-5 sm:space-y-6">
                 {/* Header Grid: Pages + Price */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
                   {/* Pages Slider */}
                   <div className="space-y-3">
                     <Label className="text-sm font-medium text-neutral-300">Number of Pages</Label>
@@ -113,7 +113,7 @@ export default function PriceEstimator({ isActive, onContactUs }: { isActive: bo
                 </div>
 
                 {/* Features and Timeline Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
                   {/* Features */}
                   <div className="space-y-3">
                     <Label className="text-sm font-medium text-neutral-300">Features</Label>
@@ -128,7 +128,7 @@ export default function PriceEstimator({ isActive, onContactUs }: { isActive: bo
                           />
                           <Label
                             htmlFor={feature}
-                            className="text-sm text-neutral-300 cursor-pointer"
+                            className="text-xs sm:text-sm text-neutral-300 cursor-pointer"
                           >
                             {feature}
                           </Label>
@@ -146,7 +146,7 @@ export default function PriceEstimator({ isActive, onContactUs }: { isActive: bo
                           <RadioGroupItem value={option} id={option} />
                           <Label
                             htmlFor={option}
-                            className="text-sm text-neutral-300 cursor-pointer flex-1"
+                            className="text-xs sm:text-sm text-neutral-300 cursor-pointer flex-1"
                           >
                             <div className="flex justify-between items-center">
                               <span>{option}</span>
@@ -164,13 +164,13 @@ export default function PriceEstimator({ isActive, onContactUs }: { isActive: bo
                 </div>
 
                 {/* Action Buttons */}
-                <div className="flex gap-3 pt-4">
-                  <Button className="flex-1 bg-[#FF4D00] text-black hover:bg-[#FF4D00]/90 font-semibold">
+                <div className="flex flex-col sm:flex-row gap-3 pt-2 sm:pt-4">
+                  <Button className="w-full sm:flex-1 bg-[#FF4D00] text-black hover:bg-[#FF4D00]/90 font-semibold">
                     Request Quote
                   </Button>
                   <Button
                     variant="outline"
-                    className="flex-1 border-neutral-600 hover:border-[#FF4D00] hover:text-[#FF4D00] font-semibold"
+                    className="w-full sm:flex-1 border-neutral-600 hover:border-[#FF4D00] hover:text-[#FF4D00] font-semibold"
                     onClick={() => {
                       const message = `Hi! I used your price estimator and got an estimate of $${estimatedPrice.toLocaleString()} for a project with:\n\n- ${pages} pages\n- Features: ${features.join(', ') || 'None'}\n- Timeline: ${timeline}\n\nI'd like to discuss this project further.`
                       onContactUs?.(message)

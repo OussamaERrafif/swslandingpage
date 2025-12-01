@@ -28,7 +28,7 @@ export default function Section({ id, title, subtitle, content, isActive, showBu
   return (
     <section
       id={id}
-      className="relative min-h-screen w-full snap-start flex flex-col justify-center px-6 py-16 md:px-12 md:py-20 lg:px-20 lg:py-24"
+      className="relative min-h-screen w-full snap-start flex flex-col justify-center px-4 py-12 sm:px-6 sm:py-16 md:px-12 md:py-20 lg:px-20 lg:py-24"
     >
       <motion.div
         className="max-w-4xl mx-auto w-full"
@@ -37,15 +37,15 @@ export default function Section({ id, title, subtitle, content, isActive, showBu
         animate={isActive ? "visible" : "hidden"}
       >
         {subtitle && (
-          <motion.div className="mb-12" variants={itemVariants}>
+          <motion.div className="mb-8 md:mb-12" variants={itemVariants}>
             {subtitle}
           </motion.div>
         )}
-        <motion.h2 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-8" variants={itemVariants}>
+        <motion.h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 md:mb-8" variants={itemVariants}>
           {title}
         </motion.h2>
         {content && (
-          <motion.p className="text-lg md:text-xl text-neutral-400 leading-relaxed mb-8" variants={itemVariants}>
+          <motion.p className="text-base sm:text-lg md:text-xl text-neutral-400 leading-relaxed mb-6 md:mb-8" variants={itemVariants}>
             {content}
           </motion.p>
         )}
@@ -54,7 +54,7 @@ export default function Section({ id, title, subtitle, content, isActive, showBu
             <Button
               variant="outline"
               size="lg"
-              className="text-[#FF4D00] bg-transparent border-[#FF4D00] hover:bg-[#FF4D00] hover:text-black transition-colors"
+              className="text-[#FF4D00] bg-transparent border-[#FF4D00] hover:bg-[#FF4D00] hover:text-black transition-colors w-full sm:w-auto"
             >
               {buttonText}
             </Button>

@@ -16,6 +16,7 @@ export default function LandingPage() {
   const [scrollProgress, setScrollProgress] = useState(0)
   const [contactMessage, setContactMessage] = useState("")
   const containerRef = useRef<HTMLDivElement>(null)
+  const sectionRefs = useRef<(HTMLDivElement | null)[]>([])
 
   useEffect(() => {
     const container = containerRef.current
@@ -23,26 +24,44 @@ export default function LandingPage() {
 
     const handleScroll = () => {
       const scrollTop = container.scrollTop
-      const windowHeight = window.innerHeight
-      const newActiveSection = Math.floor(scrollTop / windowHeight)
-      setActiveSection(newActiveSection)
-
-      // Calculate scroll progress for progress bar
-      const scrollHeight = container.scrollHeight - windowHeight
+      const scrollHeight = container.scrollHeight - container.clientHeight
       const progress = scrollHeight > 0 ? scrollTop / scrollHeight : 0
       setScrollProgress(progress)
     }
 
+    const observerOptions = {
+      root: container,
+      threshold: 0.2, // Lower threshold for better mobile detection
+    }
+
+    const observerCallback: IntersectionObserverCallback = (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const index = sectionRefs.current.indexOf(entry.target as HTMLDivElement)
+          if (index !== -1) {
+            setActiveSection(index)
+          }
+        }
+      })
+    }
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions)
+    sectionRefs.current.forEach((section) => {
+      if (section) observer.observe(section)
+    })
+
     container.addEventListener("scroll", handleScroll, { passive: true })
-    return () => container.removeEventListener("scroll", handleScroll)
+    
+    return () => {
+      container.removeEventListener("scroll", handleScroll)
+      observer.disconnect()
+    }
   }, [])
 
   const handleNavClick = (index: number) => {
-    if (containerRef.current) {
-      containerRef.current.scrollTo({
-        top: index * window.innerHeight,
-        behavior: "smooth",
-      })
+    const section = sectionRefs.current[index]
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" })
     }
   }
 
@@ -68,14 +87,14 @@ export default function LandingPage() {
       case "contact":
         return <ContactForm key={section.id} isActive={isActive} prefilledMessage={contactMessage} />
       default:
-        return <Section key={section.id} {...section} isActive={isActive} />
+        return <Section key={section.id} {...(section as any)} isActive={isActive} />
     }
   }
 
   return (
     <Layout>
-      {/* Navigation dots */}
-      <nav className="fixed top-0 right-0 h-screen flex flex-col justify-center z-30 p-4">
+      {/* Navigation dots - Hidden on mobile */}
+      <nav className="hidden md:flex fixed top-0 right-0 h-screen flex-col justify-center z-30 p-4">
         {sections.map((section, index) => (
           <button
             key={section.id}
@@ -95,8 +114,18 @@ export default function LandingPage() {
       />
 
       {/* Main scroll container */}
-      <div ref={containerRef} className="h-full overflow-y-auto snap-y snap-mandatory scroll-smooth">
-        {sections.map((section, index) => renderSection(section, index, index === activeSection))}
+      <div ref={containerRef} className="h-full overflow-y-auto md:snap-y md:snap-mandatory scroll-smooth">
+        {sections.map((section, index) => (
+          <div
+            key={section.id}
+            ref={(el) => {
+              sectionRefs.current[index] = el
+            }}
+            className="w-full md:snap-start"
+          >
+            {renderSection(section, index, index === activeSection)}
+          </div>
+        ))}
       </div>
     </Layout>
   )

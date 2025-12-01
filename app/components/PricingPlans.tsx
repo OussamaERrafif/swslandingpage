@@ -84,43 +84,43 @@ export default function PricingPlans({ isActive }: { isActive: boolean }) {
   }
 
   return (
-    <section className="relative min-h-screen w-full snap-start flex flex-col justify-center px-6 py-16 md:px-12 md:py-20 lg:px-20 lg:py-24">
+    <section className="relative min-h-screen w-full snap-start flex flex-col justify-center px-4 py-12 sm:px-6 sm:py-16 md:px-12 md:py-20 lg:px-20 lg:py-24">
       <motion.div
         className="max-w-7xl mx-auto w-full"
         variants={containerVariants}
         initial="hidden"
         animate={isActive ? "visible" : "hidden"}
       >
-        <motion.div className="mb-12" variants={itemVariants}>
+        <motion.div className="mb-8 md:mb-12" variants={itemVariants}>
           <span className="text-sm font-semibold text-[#FF4D00] uppercase tracking-wider">Our Team</span>
         </motion.div>
 
-        <motion.h2 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-16" variants={itemVariants}>
+        <motion.h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-8 md:mb-16" variants={itemVariants}>
           Meet the Team
         </motion.h2>
 
-        <motion.div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8" variants={containerVariants}>
+        <motion.div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8" variants={containerVariants}>
           {teamMembers.map((member) => (
             <motion.div
               key={member.name}
-              className={`rounded-lg p-8 border transition-all ${
+              className={`rounded-lg p-5 sm:p-6 md:p-8 border transition-all ${
                 member.highlighted ? "border-[#FF4D00] bg-[#FF4D00]/10" : "border-neutral-700 bg-neutral-900/50"
               }`}
               variants={itemVariants}
               whileHover={{ y: -5 }}
             >
-              <div className="mb-6">
-                <div className="w-20 h-20 rounded-full bg-gradient-to-br from-[#FF4D00] to-orange-600 flex items-center justify-center mb-4">
-                  <span className="text-3xl font-bold text-white">
+              <div className="mb-5 sm:mb-6">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gradient-to-br from-[#FF4D00] to-orange-600 flex items-center justify-center mb-3 sm:mb-4">
+                  <span className="text-2xl sm:text-3xl font-bold text-white">
                     {member.name.split(' ').map(n => n[0]).join('')}
                   </span>
                 </div>
-                <h3 className="text-2xl font-bold mb-2">{member.name}</h3>
-                <p className="text-[#FF4D00] font-semibold text-sm mb-3">{member.role}</p>
-                <p className="text-neutral-400 text-sm mb-6">{member.description}</p>
+                <h3 className="text-xl sm:text-2xl font-bold mb-2">{member.name}</h3>
+                <p className="text-[#FF4D00] font-semibold text-xs sm:text-sm mb-2 sm:mb-3">{member.role}</p>
+                <p className="text-neutral-400 text-xs sm:text-sm mb-4 sm:mb-6">{member.description}</p>
               </div>
 
-              <div className="flex gap-3 mb-8">
+              <div className="flex gap-2 sm:gap-3 mb-6 sm:mb-8">
                 {member.portfolio && (
                   <a
                     href={member.portfolio}
@@ -129,7 +129,7 @@ export default function PricingPlans({ isActive }: { isActive: boolean }) {
                     className="p-2 rounded-lg bg-neutral-800 hover:bg-[#FF4D00] transition-colors"
                     aria-label="Portfolio"
                   >
-                    <Globe className="w-5 h-5" />
+                    <Globe className="w-4 h-4 sm:w-5 sm:h-5" />
                   </a>
                 )}
                 {member.linkedin && (
@@ -140,7 +140,7 @@ export default function PricingPlans({ isActive }: { isActive: boolean }) {
                     className="p-2 rounded-lg bg-neutral-800 hover:bg-[#FF4D00] transition-colors"
                     aria-label="LinkedIn"
                   >
-                    <Linkedin className="w-5 h-5" />
+                    <Linkedin className="w-4 h-4 sm:w-5 sm:h-5" />
                   </a>
                 )}
                 {member.github && (
@@ -151,7 +151,7 @@ export default function PricingPlans({ isActive }: { isActive: boolean }) {
                     className="p-2 rounded-lg bg-neutral-800 hover:bg-[#FF4D00] transition-colors"
                     aria-label="GitHub"
                   >
-                    <Github className="w-5 h-5" />
+                    <Github className="w-4 h-4 sm:w-5 sm:h-5" />
                   </a>
                 )}
                 {member.email && (
@@ -160,18 +160,18 @@ export default function PricingPlans({ isActive }: { isActive: boolean }) {
                     className="p-2 rounded-lg bg-neutral-800 hover:bg-[#FF4D00] transition-colors"
                     aria-label="Email"
                   >
-                    <Mail className="w-5 h-5" />
+                    <Mail className="w-4 h-4 sm:w-5 sm:h-5" />
                   </a>
                 )}
               </div>
 
-              <div className="space-y-3">
+              <div className="space-y-2 sm:space-y-3">
                 <p className="text-xs font-semibold text-neutral-400 uppercase tracking-wider">Skills</p>
-                <ul className="space-y-2">
+                <ul className="space-y-1.5 sm:space-y-2">
                   {member.skills.map((skill) => (
                     <li key={skill} className="flex items-center gap-2">
-                      <div className="w-1.5 h-1.5 rounded-full bg-[#FF4D00]" />
-                      <span className="text-sm text-neutral-300">{skill}</span>
+                      <div className="w-1.5 h-1.5 rounded-full bg-[#FF4D00] flex-shrink-0" />
+                      <span className="text-xs sm:text-sm text-neutral-300">{skill}</span>
                     </li>
                   ))}
                 </ul>

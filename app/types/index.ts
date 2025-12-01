@@ -7,7 +7,7 @@ export interface Section {
   content?: string
   showButton?: boolean
   buttonText?: string
-  type?: "default" | "gallery" | "pricing" | "estimator" | "contact"
+  type?: "default" | "about" | "gallery" | "pricing" | "estimator" | "contact"
 }
 
 export interface SectionProps extends Section {
