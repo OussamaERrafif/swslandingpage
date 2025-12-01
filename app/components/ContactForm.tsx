@@ -5,6 +5,8 @@ import type React from "react"
 import { motion } from "framer-motion"
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
+import { sendContactEmail } from "@/app/actions"
+import { toast } from "sonner"
 
 export default function ContactForm({ isActive, prefilledMessage }: { isActive: boolean, prefilledMessage?: string }) {
   const [formData, setFormData] = useState({
@@ -14,6 +16,7 @@ export default function ContactForm({ isActive, prefilledMessage }: { isActive: 
     message: prefilledMessage || "",
   })
   const [submitted, setSubmitted] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   useEffect(() => {
     if (prefilledMessage) {
@@ -26,9 +29,27 @@ export default function ContactForm({ isActive, prefilledMessage }: { isActive: 
     setFormData((prev) => ({ ...prev, [name]: value }))
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    setIsSubmitting(true)
+
+    const formDataToSend = new FormData()
+    formDataToSend.append("name", formData.name)
+    formDataToSend.append("email", formData.email)
+    formDataToSend.append("company", formData.company)
+    formDataToSend.append("message", formData.message)
+
+    const result = await sendContactEmail(formDataToSend)
+
+    setIsSubmitting(false)
+
+    if (result.error) {
+      toast.error(result.error)
+      return
+    }
+
     setSubmitted(true)
+    toast.success("Message sent successfully!")
     setTimeout(() => {
       setFormData({ name: "", email: "", company: "", message: "" })
       setSubmitted(false)
@@ -144,8 +165,11 @@ export default function ContactForm({ isActive, prefilledMessage }: { isActive: 
                   />
                 </div>
 
-                <Button className="w-full bg-[#FF4D00] text-black hover:bg-[#FF4D00]/90 py-2.5 sm:py-3 text-sm sm:text-base font-semibold">
-                  Send Message
+                <Button 
+                  className="w-full bg-[#FF4D00] text-black hover:bg-[#FF4D00]/90 py-2.5 sm:py-3 text-sm sm:text-base font-semibold"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? "Sending..." : "Send Message"}
                 </Button>
               </form>
             )}
