@@ -107,7 +107,7 @@ export default function PriceEstimator({ isActive, onContactUs }: { isActive: bo
                   {/* Estimated Price Display */}
                   <div className="flex flex-col justify-center items-center p-4 bg-neutral-800/50 rounded-lg border border-neutral-700">
                     <span className="text-sm text-neutral-400 mb-1">Estimated Price</span>
-                    <span className="text-3xl font-bold text-[#FF4D00]">${estimatedPrice.toLocaleString()}</span>
+                    <span className="text-3xl font-bold text-[#FF4D00]">DH{estimatedPrice.toLocaleString()}</span>
                     <p className="text-xs text-neutral-500 mt-1">Starting price</p>
                   </div>
                 </div>
